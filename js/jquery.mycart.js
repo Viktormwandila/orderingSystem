@@ -443,6 +443,10 @@
         url: "http://localhost:3000/insert.php",
         type: "POST",
         data: { orderItems: products }
+      }).done(() => {
+        console.log("done");
+        ProductManager.clearProduct();
+        ProductManager.getAllProducts();
       });
     });
 
