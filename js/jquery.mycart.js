@@ -439,8 +439,8 @@
     ////here...,,,///
     $("#order").click(function() {
       const products = ProductManager.getAllProducts();
-      $.ajax("localhost:3000", {
-        contentType: "application/json",
+      $.ajax({
+        url: "http://localhost:3000",
         type: "POST",
         data: { orderItems: products }
       });

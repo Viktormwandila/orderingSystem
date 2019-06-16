@@ -6,7 +6,6 @@ if (mysqli_connect_errno()) {
     echo mysqli_connect_error();
     exit();
 }
-
 //store product
 if($_POST['action'] == 'store') {
     //get product views

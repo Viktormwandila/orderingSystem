@@ -1,14 +1,15 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+
 $db_conx = mysqli_connect("localhost", "root", "", "restaurants");
 // Evaluate the connection
 if (mysqli_connect_errno()) {
     echo mysqli_connect_error();
     exit();
 }
-console.log('here');
-if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 //store product
 if($_POST['action'] == 'store') {
     //get product views
