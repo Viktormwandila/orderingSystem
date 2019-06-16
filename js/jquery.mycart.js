@@ -218,58 +218,7 @@
       $cartTable.empty();
 
       var products = ProductManager.getAllProducts();
-      $.each(products, function() {
-        var total = this.quantity * this.price;
-        $cartTable.append(
-          '<tr title="' +
-            this.summary +
-            '" data-id="' +
-            this.id +
-            '" data-price="' +
-            this.price +
-            '">' +
-            '<td class="text-center" style="width: 30px;"><img width="30px" height="30px" src="' +
-            this.image +
-            '"/></td>' +
-            "<td>" +
-            this.name +
-            "</td>" +
-            '<td title="Unit Price">$' +
-            this.price +
-            "</td>" +
-            '<td title="Quantity"><input type="number" min="1" style="width: 70px;" class="' +
-            classProductQuantity +
-            '" value="' +
-            this.quantity +
-            '"/></td>' +
-            '<td title="Total" class="' +
-            classProductTotal +
-            '">$' +
-            total +
-            "</td>" +
-            '<td title="Remove from Cart" class="text-center" style="width: 30px;"><a href="javascript:void(0);" class="btn btn-xs btn-danger ' +
-            classProductRemove +
-            '">X</a></td>' +
-            "</tr>"
-        );
-      });
-
-      $cartTable.append(
-        products.length
-          ? "<tr>" +
-              "<td></td>" +
-              "<td><strong>Total</strong></td>" +
-              "<td></td>" +
-              "<td></td>" +
-              '<td><strong id="' +
-              idGrandTotal +
-              '">$</strong></td>' +
-              "<td></td>" +
-              "</tr>"
-          : '<div class="alert alert-danger" role="alert" id="' +
-              idEmptyCartMessage +
-              '">Your order is empty</div>'
-      );
+      renderCart(false);
 
       var discountPrice = options.getDiscountPrice(
         products,
@@ -410,6 +359,68 @@
     });
   };
 
+  var renderCart = function() {
+    var $cartTable = $("#my-cart-table");
+    var idGrandTotal = "my-cart-grand-total";
+    var idEmptyCartMessage = "my-cart-empty-message";
+    var products = ProductManager.getAllProducts();
+    var classProductTotal = "my-product-total";
+    var classProductRemove = "my-product-remove";
+    var classProductQuantity = "my-product-quantity";
+    $cartTable.empty();
+    $.each(products, function() {
+      var total = this.quantity * this.price;
+      $cartTable.append(
+        '<tr title="' +
+          this.summary +
+          '" data-id="' +
+          this.id +
+          '" data-price="' +
+          this.price +
+          '">' +
+          '<td class="text-center" style="width: 30px;"><img width="30px" height="30px" src="' +
+          this.image +
+          '"/></td>' +
+          "<td>" +
+          this.name +
+          "</td>" +
+          '<td title="Unit Price">$' +
+          this.price +
+          "</td>" +
+          '<td title="Quantity"><input type="number" min="1" style="width: 70px;" class="' +
+          classProductQuantity +
+          '" value="' +
+          this.quantity +
+          '"/></td>' +
+          '<td title="Total" class="' +
+          classProductTotal +
+          '">$' +
+          total +
+          "</td>" +
+          '<td title="Remove from Cart" class="text-center" style="width: 30px;"><a href="javascript:void(0);" class="btn btn-xs btn-danger ' +
+          classProductRemove +
+          '">X</a></td>' +
+          "</tr>"
+      );
+    });
+    $cartTable.append(
+      products.length
+        ? "<tr>" +
+            "<td></td>" +
+            "<td><strong>Total</strong></td>" +
+            "<td></td>" +
+            "<td></td>" +
+            '<td><strong id="' +
+            idGrandTotal +
+            '">$</strong></td>' +
+            "<td></td>" +
+            "</tr>"
+        : '<div class="alert alert-danger" role="alert" id="' +
+            idEmptyCartMessage +
+            '">Your order is empty</div>'
+    );
+  };
+
   var MyCart = function(target, userOptions) {
     /*
     PRIVATE
@@ -444,9 +455,8 @@
         type: "POST",
         data: { orderItems: products }
       }).done(() => {
-        console.log("done");
         ProductManager.clearProduct();
-        ProductManager.getAllProducts();
+        renderCart();
       });
     });
 
