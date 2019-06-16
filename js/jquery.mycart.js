@@ -218,7 +218,7 @@
       $cartTable.empty();
 
       var products = ProductManager.getAllProducts();
-      renderCart(false);
+      renderCart("Your cart is empty", "alert-danger");
 
       var discountPrice = options.getDiscountPrice(
         products,
@@ -359,7 +359,7 @@
     });
   };
 
-  var renderCart = function() {
+  var renderCart = function(message, style) {
     var $cartTable = $("#my-cart-table");
     var idGrandTotal = "my-cart-grand-total";
     var idEmptyCartMessage = "my-cart-empty-message";
@@ -415,9 +415,7 @@
             '">$</strong></td>' +
             "<td></td>" +
             "</tr>"
-        : '<div class="alert alert-danger" role="alert" id="' +
-            idEmptyCartMessage +
-            '">Your order is empty</div>'
+        : `<div class="alert ${style}" role="alert" id="${idEmptyCartMessage}">${message}</div>`
     );
   };
 
@@ -456,7 +454,7 @@
         data: { orderItems: products }
       }).done(() => {
         ProductManager.clearProduct();
-        renderCart();
+        renderCart("Your order has been placed", "alert-success");
       });
     });
 
