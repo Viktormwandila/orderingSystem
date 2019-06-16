@@ -1,13 +1,12 @@
 <?php
-
 $db_conx = mysqli_connect("localhost", "root", "", "restaurants");
 // Evaluate the connection
 if (mysqli_connect_errno()) {
     echo mysqli_connect_error();
     exit();
 }
-//store product
-if($_POST['action'] == 'store') {
+// store product
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     //get product views
     $orderItems = $_POST['orderItems'];
     //insert views in database table
@@ -21,6 +20,9 @@ if($_POST['action'] == 'store') {
         header('Content-Type: application/json');
         echo json_encode($id);
     }
+}
+if($_SERVER["REQUEST_METHOD"] == "GET"){
+    // do get stuff here like get orders from database
 }
 
 ?>

@@ -440,7 +440,7 @@
     $("#order").click(function() {
       const products = ProductManager.getAllProducts();
       $.ajax({
-        url: "http://localhost:3000",
+        url: "http://localhost:3000/insert.php",
         type: "POST",
         data: { orderItems: products }
       });

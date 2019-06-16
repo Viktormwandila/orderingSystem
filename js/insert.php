@@ -1,5 +1,5 @@
 <?php
-
+die('here');
 header("Access-Control-Allow-Origin: *");
 
 $db_conx = mysqli_connect("localhost", "root", "", "restaurants");
